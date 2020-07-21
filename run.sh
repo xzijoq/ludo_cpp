@@ -46,7 +46,7 @@ then
     ./run.sh clean
     git add .
     git commit -m "test"
-    git push
+    git push origin master
 fi
 
 if [[ $1 = copy ]]
