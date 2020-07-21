@@ -17,5 +17,4 @@ build/**
 ./ludo-cpp/.mono/**
 ./ludo-cpp/.import
 ./ludo-cpp/.import/**
-./ludo-cpp/bin/x11
 ./ludo-cpp/bin/x11/**
