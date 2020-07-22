@@ -17,8 +17,8 @@ class BoardDisplay : public Node2D
     Vector2 Scale64 = Vector2( 0, 0 );
     Vector2 Scale_L = Vector2( 0, 0 );
 
-    std::array<Sprite*, ARRAY_SIZE( G2::LudoBoard )> Cell;
-    std::array<Vector2, G2::MAX_ROW * G2::MAX_COL>   Posi;
+  std::array<Sprite*, G2::LudoBoard.size()>      Cell;
+    std::array<Vector2, G2::MAX_ROW * G2::MAX_COL> Posi;
 
    public:
     void        _init();
@@ -26,7 +26,9 @@ class BoardDisplay : public Node2D
     void        _ready();
     void        InitBoard();
     void        DrawBoard();
+    void        DrawDebugBoard();
     Vector2     GetPosi( int square );
+
 };
 
 }  // namespace godot

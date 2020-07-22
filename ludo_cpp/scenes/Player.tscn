@@ -6,4 +6,11 @@
 [node name="Player" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="PPiece" parent="." instance=ExtResource( 1 )]
+[node name="Pi0" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -1 )
+
+[node name="Pi1" parent="." instance=ExtResource( 1 )]
+
+[node name="Pi2" parent="." instance=ExtResource( 1 )]
+
+[node name="Pi3" parent="." instance=ExtResource( 1 )]

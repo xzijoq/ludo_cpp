@@ -1,19 +1,9 @@
 #pragma once
 
-#include <Array.hpp>
-#include <Godot.hpp>
-#include <vector>
-
-#include "OS.hpp"
-#include "Vector2.hpp"
-using namespace godot;
-
-
+#include <array>
 #define ARRAY_SIZE( a ) ( sizeof( a ) / sizeof( a[0] ) )
 namespace G2
 {
-
-
 struct IntV2 {
     int x;
     int y;
@@ -26,7 +16,7 @@ int constexpr MAX_PIECES  = 4;
 int constexpr START_POSI  = 72;
 int constexpr END_POSI    = 73;
 
-int constexpr LudoBoard[]{
+  constexpr std::array LudoBoard{
     6, 7, 8, 23, 38, 53, 68, 83,                                     // 0-7
     99, 100, 101, 102, 103, 104, 119, 134, 133, 132, 131, 130, 129,  // 8-20
     143, 158, 173, 188, 203, 218, 217, 216, 201, 186, 171, 156,
@@ -40,11 +30,11 @@ int constexpr LudoBoard[]{
     106, 107, 108, 109, 110,  // 67-71
     START_POSI, END_POSI };
 
-int constexpr SafeSq[]       = { 3,  11, 16, 24,         29,
-                           37, 42, 50, START_POSI, END_POSI };
-int constexpr StartSq[]      = { 3, 6, 29, 42 };
-int constexpr SwitchSq[]     = { 1, 14, 27, 40 };
-int constexpr SwitchIntoSq[] = { 52, 57, 62, 67 };
-int constexpr EndSquare[]    = { 56, 61, 66, 71 };
+  constexpr std::array SafeSq       = { 3,  11, 16, 24,         29,
+                                37, 42, 50, START_POSI, END_POSI };
+  constexpr std::array StartSq      = { 3, 6, 29, 42 };
+  constexpr std::array SwitchSq     = { 1, 14, 27, 40 };
+  constexpr std::array SwitchIntoSq = { 52, 57, 62, 67 };
+  constexpr std::array EndSquare    = { 56, 61, 66, 71 };
 
 }  // namespace G2
