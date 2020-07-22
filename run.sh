@@ -12,19 +12,19 @@ fi
 
 if [[ $1 = s ]]
 then
-    echo "running: camke --build build and runnning Scene: "
+    echo "running: camke --build build and runnning Scene: $2"
     cmake --build build
     cp ./build/compile_commands.json ./compile_commands.json 
     cp ./build/libludo_engine.so ./ludo_cpp/bin/x11/libludo_engine.so
     cd /home/babayaga/Godot/Projects/ludo_cpp/ludo_cpp/
     if [[ $2 = "" ]]
     then
-	/home/babayaga/Godot/Godot -d scenes/BoardDisplay.tscn 
+    	/home/babayaga/Godot/Godot -d scenes/BoardDisplay.tscn 
 	
     else
        
-	/home/babayaga/Godot/Godot -d scenes/$2.tscn
-	.tscn
+	    /home/babayaga/Godot/Godot -d scenes/$2.tscn
+
     fi
     
 fi

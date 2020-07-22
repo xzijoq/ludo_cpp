@@ -2,8 +2,10 @@
 #include <GData.h>
 
 #include "Area2D.hpp"
+#include "Node2D.hpp"
 #include "PackedScene.hpp"
 #include "ResourceLoader.hpp"
+#include "Vector2.hpp"
 
 using namespace godot;
 
@@ -13,11 +15,31 @@ void BoardDisplay::_ready()
 {
     InitBoard();
 
-     DrawBoard();
-
+    DrawBoard();
+    InitPlayers();
 }
 
+void BoardDisplay::InitPlayers()
+{
+    String DefaultPiece[] = {
+        "res://assets/PlayerIcons/p0.png",
+        "res://assets/PlayerIcons/p1.png",
+        "res://assets/PlayerIcons/p2.png",
+        "res://assets/PlayerIcons/p3.png",
 
+    };
+    int  j      = 0;
+    auto Loader = ResourceLoader::get_singleton();
+    Player_L    = Loader->load( "res://scenes/Player.tscn" );
+    for ( int i = 0; i < Player.size(); i++ ) {
+        Player[i] = (Node2D *)Player_L->instance();
+
+        add_child( Player[i] );
+        Player[i]->set_position( Vector2( 0, j += 64 ) );
+        Player[i]->call( "SetTexturePl", DefaultPiece[i] );
+        Player[i]->call( "SetPlID", i );
+    }
+}
 
 void BoardDisplay::InitBoard()
 {
@@ -45,23 +67,21 @@ void BoardDisplay::InitBoard()
 }
 void BoardDisplay::DrawBoard()
 {
+    auto             Loader   = ResourceLoader::get_singleton();
     Ref<PackedScene> Cell_I   = nullptr;
     Ref<Texture>     SafeCell = nullptr;
 
-    auto             Loader   = ResourceLoader::get_singleton();
-    Cell_I                    = Loader->load( "res://scenes/Square.tscn" );
+    Cell_I   = Loader->load( "res://scenes/Square.tscn" );
     SafeCell = Loader->load( "res://assets/PlayerIcons/safecell.png" );
     for ( auto l = 0; l < G2::LudoBoard.size(); l++ ) {
         int k = G2::LudoBoard[l];
 
         Cell[l] = (Sprite *)Cell_I->instance();
-        Cell[l]->set_position( Posi[k] );
-        // Cell[l]->position = G2::Posi[k];
-        Cell[l]->set_scale( Scale_L );
-
-        Cell[l]->call( "SetId", l );
 
         add_child( (const Node *)Cell[l] );
+        Cell[l]->set_position( Posi[k] );
+        Cell[l]->set_scale( Scale_L );
+        Cell[l]->call( "SetId", l );
     }
     for ( int i : G2::SafeSq ) { Cell[i]->set_texture( SafeCell ); }
 }
@@ -74,6 +94,5 @@ void    BoardDisplay::_register_methods()
     register_method( "InitBoard", &BoardDisplay::InitBoard );
     register_method( "DrawBoard", &BoardDisplay::DrawBoard );
     register_method( "GetPosi", &BoardDisplay::GetPosi );
-
 }
 void BoardDisplay::_init() {}
