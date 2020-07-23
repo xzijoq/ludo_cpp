@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+
 #define ARRAY_SIZE( a ) ( sizeof( a ) / sizeof( a[0] ) )
 namespace G2
 {
@@ -15,6 +16,10 @@ int constexpr MAX_PLAYERS = 4;
 int constexpr MAX_PIECES  = 4;
 int constexpr START_POSI  = 72;
 int constexpr END_POSI    = 73;
+
+
+constexpr std::array SpawnPoint{0,12,192,180};
+
 
 constexpr std::array LudoBoard{
     6, 7, 8, 23, 38, 53, 68, 83,                                     // 0-7

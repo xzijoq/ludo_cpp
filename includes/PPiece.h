@@ -8,7 +8,7 @@
 #include "String.hpp"
 #include "Vector2.hpp"
 #include "gdnative/variant.h"
-
+#include <Timer.hpp>
 namespace godot
 {
 class PPiece : public godot::Area2D
@@ -16,7 +16,6 @@ class PPiece : public godot::Area2D
     GODOT_CLASS( PPiece, Area2D );
 
    public:
-    int  PlayerID;
     int  PieceID;
     bool IsActivePi;
 
@@ -29,9 +28,16 @@ class PPiece : public godot::Area2D
     void        SetTexturePi( String path );
     int         GetPiID();
     void        SetPiID( int piID );
+    void _on_PPiece_Input_event( const Object*, Ref<InputEvent>, int64_t );
 
    private:
-    void _on_PPiece_Input_event( const Object*, Ref<InputEvent>, int64_t );
+   void Initialize();
+   private:
+   Vector2 SC_SZ;
+  Timer* t1;
+
+
+
 };
 
 }  // namespace godot

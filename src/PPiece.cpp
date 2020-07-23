@@ -5,31 +5,46 @@
 #include <Godot.hpp>
 #include <Sprite.hpp>
 #include <cstdio>
-#include<string>
-
+#include <string>
 
 #include "GodotGlobal.hpp"
 #include "InputEvent.hpp"
+#include "InputEventAction.hpp"
 #include "InputEventMouseButton.hpp"
 #include "Object.hpp"
 #include "PoolArrays.hpp"
 #include "ResourceLoader.hpp"
 #include "Texture.hpp"
+#include "Vector2.hpp"
 #include "gdnative/variant.h"
 using namespace godot;
 
 void PPiece::_ready()
 {
-
+    Initialize();
     connect( "input_event", this, "_on_PPiece_Input_event" );
-    //  SetTexturePi("res://assets/PlayerIcons/p2.png");
+}
 
-    // PlayerID=false;
+void PPiece::Initialize()
+{
+    Vector2 Scale_L;
+    float   CellSize = 0.0f;
+    int     SPixel   = 64;
+
+    // update later
+
+    SC_SZ = Vector2( 600, 1024 );
+
+    float ShortLen = SC_SZ.x < SC_SZ.y ? SC_SZ.x : SC_SZ.y;
+
+    // ShortLen=600;
+    CellSize = ShortLen / G2::MAX_ROW;
+    Scale_L  = Vector2( CellSize / SPixel, CellSize / SPixel );
+    set_scale( Scale_L );
+   // MoveTo( Vector2( 72, 72 ) );
 }
 void PPiece::SetTexturePi( String PathT )
 {
-
-    
     //  Godot::print( "Picaslled" );
     auto Loader = ResourceLoader::get_singleton();
     ( (Sprite*)get_node( "Sprite" ) )
@@ -39,31 +54,18 @@ void PPiece::SetTexturePi( String PathT )
 void PPiece::MoveTo( Vector2 posi )
 {
     // Animation and all here
-    set_position( posi );
-}
-
-void PPiece::_on_PPiece_Input_event( const Object* vp, Ref<InputEvent> event,
-                                     int64_t idx )
-{
-    //  Godot::print( "HAmn abbhi zinda hain nigger" );
-    if ( event->get_class() == "InputEventMouseButton" ) {
-        if ( ( (Ref<InputEventMouseButton>)event )->get_button_index() == 1 ) {
-            if ( IsActivePi != 0 ) {
-                emit_signal( "Up_PPclicked_s", PlayerID, 3 );
-            }
-        }
+    if ( posi != Vector2( 72, 72 ) ) {
+        set_position( posi );
+    } else {
+        if ( PieceID == 0 ) { set_position( Vector2( 0, 0 ) ); }
+        if ( PieceID == 1 ) { set_position( Vector2( 64, 0 ) ); }
+        if ( PieceID == 2 ) { set_position( Vector2( 0, 64 ) ); }
+        if ( PieceID == 3 ) { set_position( Vector2( 64, 64 ) ); }
     }
 }
 
-int  PPiece::GetPiID(){
-
- return PieceID;
-
-}
-void PPiece::SetPiID( int piID ){
-
-    PieceID=piID;
-}
+int  PPiece::GetPiID() { return PieceID; }
+void PPiece::SetPiID( int piID ) { PieceID = piID; }
 
 void PPiece::_register_methods()
 {
@@ -81,9 +83,24 @@ void PPiece::_register_methods()
     // Down
     // Up
     register_signal<PPiece>( (char*)"Up_PPclicked_s", "pyID",
-                             GODOT_VARIANT_TYPE_INT, "piID",
                              GODOT_VARIANT_TYPE_INT );
 }
+
+void PPiece::_on_PPiece_Input_event( const Object* vp, Ref<InputEvent> event,
+                                     int64_t idx )
+{
+    
+    //  Godot::print( "HAmn abbhi zinda hain nigger" );
+    if ( event->get_class() == "InputEventMouseButton" ) {
+        if ( ( (Ref<InputEventMouseButton>)event )->get_button_index() == 1 ) {
+            if ( event->is_pressed() ) {
+                emit_signal( "Up_PPclicked_s", PieceID );
+                // Godot::print("omg");
+            }
+        }
+    }
+}
+
 void PPiece::_init() {}
 
 void PPiece::test( String a ) { Godot::print( "Wahh Kya Bakchodihai" ); }

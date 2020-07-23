@@ -3,5 +3,5 @@
 [ext_resource path="res://bin/ludo_lib.tres" type="GDNativeLibrary" id=1]
 
 [resource]
-class_name = "LudoEngine"
+class_name = "GameEngine"
 library = ExtResource( 1 )

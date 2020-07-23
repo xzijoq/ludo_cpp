@@ -7,8 +7,8 @@
 
 {
   "directory": "/home/babayaga/Godot/Projects/ludo_cpp/build",
-  "command": "/usr/bin/c++  -Dludo_engine_EXPORTS -I../../../godot-cpp/godot_headers -I../../../godot-cpp/include -I../../../godot-cpp/include/core -I../../../godot-cpp/include/gen -I../../../godot-cpp/bin -I../includes  -Wall -std=c++17 -g -O0 -g -fPIC   -o CMakeFiles/ludo_engine.dir/src/LudoEngine.cpp.o -c /home/babayaga/Godot/Projects/ludo_cpp/src/LudoEngine.cpp",
-  "file": "/home/babayaga/Godot/Projects/ludo_cpp/src/LudoEngine.cpp"
+  "command": "/usr/bin/c++  -Dludo_engine_EXPORTS -I../../../godot-cpp/godot_headers -I../../../godot-cpp/include -I../../../godot-cpp/include/core -I../../../godot-cpp/include/gen -I../../../godot-cpp/bin -I../includes  -Wall -std=c++17 -g -O0 -g -fPIC   -o CMakeFiles/ludo_engine.dir/src/GameEngine.cpp.o -c /home/babayaga/Godot/Projects/ludo_cpp/src/GameEngine.cpp",
+  "file": "/home/babayaga/Godot/Projects/ludo_cpp/src/GameEngine.cpp"
 },
 
 {

@@ -1,0 +1,320 @@
+
+#+STARTUP: overview 
+#+PROPERTY: header-args :comments yes :results silent
+* interface tweaks
+  #+BEGIN_SRC emacs-lisp
+    (setq inhibit-startup-message t)
+    (tool-bar-mode -1)
+    (fset 'yes-or-no-p 'y-or-n-p)
+    ;swap del and backspace() 
+
+    (global-set-key (kbd "<f5>") 'revert-buffer)
+  (global-set-key (kbd "C-'") 'company-select-next)
+  (global-set-key (kbd "C-;") 'company-select-previous)
+  (global-set-key (kbd "C-c p") 'origami-toggle-node)
+  (global-set-key (kbd "C-h") 'delete-backward-char)  
+
+    ;(global-linum-mode 0)
+    (global-display-line-numbers-mode)
+
+   (tab-bar-mode 1)
+   (global-tab-line-mode 1)
+   '(eldoc-echo-area-use-multiline-p nil)
+
+   
+    ;(custom-set-variables
+    ;  '(initial-frame-alist (quote ((fullscreen . maximized)))))
+  #+END_SRC
+* which key
+  #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+      :ensure t 
+      :defer t
+      :config
+        (which-key-mode))
+  #+END_SRC
+* org-Mode
+** Tweaks
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-fontify-natively t)
+     (setq org-src-tab-acts-natively 0)
+
+   #+END_SRC
+** org-bullets
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t
+       :defer t
+       :init
+         (add-hook 'org-mode-hook 'org-bullets-mode))
+   #+END_SRC
+
+* ivy/counsel/swiper
+  #+BEGIN_SRC emacs-lisp
+    (use-package counsel
+      :ensure t 
+      :init
+        (counsel-mode 1))
+    (use-package ivy
+      :ensure t 
+      :init
+        (ivy-mode 1))
+    (use-package swiper
+      :ensure t 
+      :bind 
+        (("C-s" . swiper)
+        ("C-r" . swiper)))
+  #+END_SRC
+
+* company
+  #+BEGIN_SRC emacs-lisp
+    (use-package company
+      :ensure t 
+      :config
+      (add-hook 'after-init-hook 'global-company-mode)     
+      (setq company-idle-delay 0)
+      (setq company-minimum-prefix-length 2)
+      (add-to-list 'company-backends 'company-omnisharp)
+      (add-hook 'csharp-mode-hook #'company-mode)
+      (setq company-dabbrev-downcase nil)
+
+      )
+    (use-package company-box
+          :ensure t
+          :hook (company-mode . company-box-mode))
+  #+END_SRC
+* Flycheck
+  #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+      :ensure t
+      :init
+      (global-flycheck-mode t))
+
+  #+END_SRC
+
+* Yasnippets
+   #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+      :ensure t
+      :defer t
+      :init
+         (yas-global-mode 0) 
+    )
+  #+END_SRC
+* Treemacs
+  #+BEGIN_SRC emacs-lisp
+
+  (use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+   )
+  
+   (use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+   (use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+  #+END_SRC
+* lsp-language support protocol
+  ;;TODO: xwidget-webkit-mode
+  ;; sudo apt install  libwebkitgtk-dev
+  #+BEGIN_SRC emacs-lisp
+    (use-package lsp-mode
+      :ensure t 
+       :hook (
+            (c++-mode . lsp-deferred)
+            (lsp-mode . lsp-enable-which-key-integration))
+    :commands (lsp lsp-deferred)
+    )
+
+    (use-package lsp-ivy
+      :ensure t 
+      :commands lsp-ivy
+    )
+
+    (use-package company-lsp
+      :ensure t 
+      :commands company-lsp
+    )
+    (push 'company-lsp company-backends)
+
+
+  #+END_SRC
+* c++ 
+** cmake mode 
+   #+BEGIN_SRC emacs-lisp
+    ;; if cmake installed via pip3
+    (setq load-path (cons (expand-file-name  "/home/qq/.local/lib/python3.6/site-packages/cmake/data/share/cmake-3.13/editors/emacs/cmake-mode") load-path))
+    (use-package cmake-mode
+      :ensure t)
+  #+END_SRC
+** clangFormat
+  #+Begin_SRC emacs-lisp
+    (use-package clang-format
+     :ensure t
+     :config
+       (global-set-key (kbd "C-c i") 'clang-format-region)
+       (global-set-key (kbd "C-c u") 'clang-format-buffer)
+       (setq clang-format-style-option "llvm"))
+  #+END_SRC
+** iasm-mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package nasm-mode
+        :ensure t)
+
+   #+END_SRC
+** lsp clagd
+   #+BEGIN_SRC emacs-lisp
+       (use-package eglot
+	     :ensure t
+             :config
+                 (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+                 (add-hook 'c-mode-hook 'eglot-ensure)
+                 (add-hook 'c++-mode-hook 'eglot-ensure)  
+                 (add-hook 'c++-mode-hook 'electirc-pair-local-mode)  
+                 (add-hook 'c++-mode-hook 'yas-minor-mode-on)  
+     )
+
+   #+END_SRC
+** 
+**       (add-hook 'c++-mode-hook 
+         'electirc-pair--local-mode )
+          (yas-minor-mode 1)
+* rainbow-delimiters
+ #+BEGIN_SRC emacs-lisp
+   (use-package rainbow-delimiters
+     :ensure t
+     :config
+       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+   #+END_SRC
+* aceWindow
+  #+BEGIN_SRC emacs-lisp
+    (use-package ace-window
+      :ensure t
+       :defer t
+      :config
+      (setq aw-scope 'frame) ;; was global
+      (global-set-key (kbd "C-x O") 'other-frame)
+      (global-set-key [remap other-window] 'ace-window))
+ 
+  #+END_SRC
+* Folding - Origami
+  #+BEGIN_SRC emacs-lisp
+    (use-package origami
+    :ensure t
+     :defer t
+    :config
+         (add-hook 'after-init-hook 'global-origami-mode)
+    )
+
+
+  #+END_SRC
+* GdScript
+  #+BEGIN_SRC emacs-lisp
+    (use-package gdscript-mode
+    :ensure t
+
+    )
+  (setq gdscript-godot-executable "/home/babayaga/Godot/Godot")
+
+  #+END_SRC
+* OmniSharp
+   #+BEGIN_SRC emacs-lisp
+     (use-package omnisharp
+       :ensure t
+       :config
+       (add-hook 'csharp-mode-hook 'omnisharp-mode)
+
+       )
+  #+END_SRC
+
+* Projectile
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t
+       :config
+       (projectile-mode +1)
+       )
+
+
+  #+END_SRC
+
+
+  
+* Themes
+** Drakula Shite
+  #+BEGIN_SRC emacs-lisp
+    (use-package  dracula-theme
+      :ensure t)
+  #+END_SRC
+
+
+* Not in use
+**     (use-package helm-lsp
+    :ensure t    
+    :commands helm-lsp-workspace-symbol
+    )
+**     (use-package lsp-ui
+      :ensure t 
+      :commands lsp-ui-mode
+      :custom
+      (lsp-ui-doc-position 'top)
+      (lsp-ui-sideline-show-diagnostics)
+      (lsp-ui-sideline-show-hover)
+      (lsp-ui-doc-delay .2)
+      
+        
+    )
+**  (use-package lsp-treemacs
+    :ensure t 
+    :init
+        (lsp-treemacs-sync-mode 1)
+     :commands lsp-treemacs-errors-list
+    )
+** * helm
+ ##+BEGIN_SRC emacs-lisp
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :init
+  (progn
+    (require 'helm-config)
+    (setq helm-candidate-number-limit 100)
+    ;; From https://gist.github.com/antifuchs/9238468
+    (setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+          helm-input-idle-delay 0.01  ; this actually updates things
+                                        ; reeeelatively quickly.
+          helm-yas-display-key-on-candidate t
+          helm-quick-update t
+          helm-M-x-requires-pattern nil
+          helm-ff-skip-boring-files t)
+    (helm-mode))
+  :bind (("C-c h" . helm-mini)
+        ("C-x C-f" . helm-find-files)	
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b" . helm-buffers-list)
+         ("M-y" . helm-show-kill-ring)
+         ("M-x" . helm-M-x)
+         ("C-x c o" . helm-occur)
+         ("C-x c SPC" . helm-all-mark-rings)))
+  (use-package helm-projectile
+   :ensure t
+  )
+  (use-package helm-ag
+    :defer t
+   :ensure t
+  )
+  (use-package helm-swoop
+   :ensure t
+   :bind(("C-s" . helm-swoop))
+  )
+
+ ##+END_SRC
+
+

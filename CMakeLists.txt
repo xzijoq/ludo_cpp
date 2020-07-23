@@ -13,7 +13,7 @@ add_library(ludo_engine SHARED)
 
 
 
-set(SourcesI src/GdRegClass.cpp src/LudoEngine.cpp src/PPiece.cpp src/GameDisplay.cpp src/Player.cpp src/GameManager.cpp src/BoardDisplay.cpp)
+set(SourcesI src/GdRegClass.cpp src/GameEngine.cpp src/PPiece.cpp src/GameDisplay.cpp src/Player.cpp src/GameManager.cpp src/BoardDisplay.cpp)
 set(IncDirs ${GodotCpp}/godot_headers ${GodotCpp}/include ${GodotCpp}/include/core ${GodotCpp}/include/gen ${GodotCpp}/bin includes )
 
 

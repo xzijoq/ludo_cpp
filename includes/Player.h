@@ -35,10 +35,10 @@ class Player : public Node2D
     void        SetTexturePl( String path );
     int         GetPlID();
     void        SetPlID( int id );
-
+    void        _on_Piece_Clicked(int pieceID);
 
    public:
-    int PlayerId   = 0;
+    int PlayerID   = 0;
     int IsActivePl = 1;  // active by default
 };
 }  // namespace godot
