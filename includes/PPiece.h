@@ -34,7 +34,7 @@ class PPiece : public godot::Area2D
    void Initialize();
    private:
    Vector2 SC_SZ;
-  Timer* t1;
+  Timer* ClickCD;
 
 
 

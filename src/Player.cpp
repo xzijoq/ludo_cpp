@@ -27,17 +27,17 @@ void Player::InitPieces()
     auto Loader = ResourceLoader::get_singleton();
 
     PPiecL = Loader->load( "res://scenes/PPiece.tscn" );
- 
+
     for ( int i = 0; i < Piece.size(); i++ ) {
         Piece[i] = (Area2D *)PPiecL->instance();
         add_child( Piece[i] );
-       // Piece[i]->set_position( Vector2( j += 64, 0) );
+        // Piece[i]->set_position( Vector2( j += 64, 0) );
         Piece[i]->call( "SetPiID", i );
         Piece[i]->connect( "Up_PPclicked_s", this, "_on_Piece_Clicked" );
-        Dw_MovePiece(i, Vector2(72,72));
+        Dw_MovePiece( i, Vector2( 72, 72 ) );
     }
 
-   // Dw_MovePiece( 3, Vector2( 0, 0 ) );
+    // Dw_MovePiece( 3, Vector2( 0, 0 ) );
     // Dw_MovePiece( 2, Vector2( 56, 256 ) );
 }
 
@@ -45,6 +45,8 @@ void Player::Dw_MovePiece( int piece, Vector2 posi )
 {
     assert( piece < G2::MAX_PIECES );
     //  emit_signal("Dw_move_piece_s",posi);
+    // currently direct call implemented
+    // if ( posi != Vector2( 72, 72 ) ) { Godot::print( "cargo" ); }
     Piece[piece]->call( "MoveTo", posi );
 }
 void Player::SetTexturePl( String path )
@@ -57,8 +59,6 @@ void Player::SetTexturePl( String path )
     }
 }
 
-
-
 int  Player::GetPlID() { return PlayerID; }
 void Player::SetPlID( int id ) { PlayerID = id; }
 
@@ -69,6 +69,7 @@ void Player::_register_methods()
     register_method( "GetPlID", &Player::GetPlID );
     register_method( "SetPlID", &Player::SetPlID );
     register_method( "_on_Piece_Clicked", &Player::_on_Piece_Clicked );
+    register_method("Dw_MovePiece",&Player::Dw_MovePiece);
 
     // Signals
     // Down
@@ -82,9 +83,9 @@ void Player::_register_methods()
     // Up
 }
 
-void Player::_on_Piece_Clicked(int pieceID) {// Godot::print( "fuck me man " ); 
+void Player::_on_Piece_Clicked( int pieceID )
+{  // Godot::print( "fuck me man " );
 
-emit_signal("Up_PlClicked_s",PlayerID,pieceID);
-
+    emit_signal( "Up_PlClicked_s", PlayerID, pieceID );
 }
 void Player::_init() {}

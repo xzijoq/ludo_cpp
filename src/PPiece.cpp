@@ -15,6 +15,7 @@
 #include "PoolArrays.hpp"
 #include "ResourceLoader.hpp"
 #include "Texture.hpp"
+#include "Timer.hpp"
 #include "Vector2.hpp"
 #include "gdnative/variant.h"
 using namespace godot;
@@ -27,6 +28,12 @@ void PPiece::_ready()
 
 void PPiece::Initialize()
 {
+    ClickCD = Timer::_new();
+    ClickCD->set_wait_time( .2 );
+    ClickCD->set_one_shot(true);
+ 
+    add_child(ClickCD);
+
     Vector2 Scale_L;
     float   CellSize = 0.0f;
     int     SPixel   = 64;
@@ -41,7 +48,7 @@ void PPiece::Initialize()
     CellSize = ShortLen / G2::MAX_ROW;
     Scale_L  = Vector2( CellSize / SPixel, CellSize / SPixel );
     set_scale( Scale_L );
-   // MoveTo( Vector2( 72, 72 ) );
+    // MoveTo( Vector2( 72, 72 ) );
 }
 void PPiece::SetTexturePi( String PathT )
 {
@@ -55,7 +62,7 @@ void PPiece::MoveTo( Vector2 posi )
 {
     // Animation and all here
     if ( posi != Vector2( 72, 72 ) ) {
-        set_position( posi );
+        set_global_position( posi );
     } else {
         if ( PieceID == 0 ) { set_position( Vector2( 0, 0 ) ); }
         if ( PieceID == 1 ) { set_position( Vector2( 64, 0 ) ); }
@@ -89,18 +96,19 @@ void PPiece::_register_methods()
 void PPiece::_on_PPiece_Input_event( const Object* vp, Ref<InputEvent> event,
                                      int64_t idx )
 {
-    
     //  Godot::print( "HAmn abbhi zinda hain nigger" );
     if ( event->get_class() == "InputEventMouseButton" ) {
         if ( ( (Ref<InputEventMouseButton>)event )->get_button_index() == 1 ) {
             if ( event->is_pressed() ) {
-                emit_signal( "Up_PPclicked_s", PieceID );
-                // Godot::print("omg");
+                if ( ClickCD->is_stopped() ) {
+                    emit_signal( "Up_PPclicked_s", PieceID );
+                    // Godot::print("omg");}
+                    ClickCD->start();
+                }
             }
         }
     }
 }
-
 void PPiece::_init() {}
 
 void PPiece::test( String a ) { Godot::print( "Wahh Kya Bakchodihai" ); }

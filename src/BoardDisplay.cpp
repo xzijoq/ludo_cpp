@@ -1,6 +1,7 @@
 #include <BoardDisplay.h>
 #include <GData.h>
 
+#include <cassert>
 #include <string>
 
 #include "Area2D.hpp"
@@ -11,6 +12,7 @@
 #include "ResourceLoader.hpp"
 #include "Vector2.hpp"
 #include "array"
+#include "gdnative/variant.h"
 using namespace godot;
 
 Area2D *PPtest;
@@ -21,7 +23,10 @@ void BoardDisplay::_ready()
 
     DrawBoard();
     InitPlayers();
-  //    DrawBaseBoard();
+    MovePP_TO( 1, 2, 52 );
+
+    // Godot::print(48+l.size());
+    //  DrawBaseBoard();
 }
 
 void BoardDisplay::InitPlayers()
@@ -75,25 +80,29 @@ void BoardDisplay::InitBoard()
             Posi[k] = Vector2( CellSize * j + Xost, CellSize * i + Yost );
         }
     }
-
-    for ( int i = ROW - 1, k = 0; i >= 0; i-- ) {
-        for ( int j = 0; j < COL; j++, k++ ) {
-            // 90 degree
-            // Posi[k] = Vector2( CellSize * i + Xost, CellSize * j + Yost );
+    /*
+        for ( int i = ROW - 1, k = 0; i >= 0; i-- ) {
+            for ( int j = 0; j < COL; j++, k++ ) {
+                // 90 degree
+                // Posi[k] = Vector2( CellSize * i + Xost, CellSize * j + Yost
+       );
+            }
         }
-    }
-    for ( int i = ROW - 1, k = 0; i >= 0; i-- ) {
-        for ( int j = COL - 1; j >= 0; j--, k++ ) {
-            // 180degree
-           // Posi[k] = Vector2( CellSize * j + Xost, CellSize * i + Yost );
+        for ( int i = ROW - 1, k = 0; i >= 0; i-- ) {
+            for ( int j = COL - 1; j >= 0; j--, k++ ) {
+                // 180degree
+                // Posi[k] = Vector2( CellSize * j + Xost, CellSize * i + Yost
+       );
+            }
         }
-    }
-    for ( int i = 0, k = 0; i < ROW; i++ ) {
-        for ( int j = COL - 1; j >= 0; j--, k++ ) {
-            // 270degree
-         //   Posi[k] = Vector2( CellSize * i + Xost, CellSize * j + Yost );
+        for ( int i = 0, k = 0; i < ROW; i++ ) {
+            for ( int j = COL - 1; j >= 0; j--, k++ ) {
+                // 270degree
+                //   Posi[k] = Vector2( CellSize * i + Xost, CellSize * j + Yost
+       );
+            }
         }
-    }
+    */
 }
 void BoardDisplay::DrawBoard()
 {
@@ -103,15 +112,15 @@ void BoardDisplay::DrawBoard()
 
     Cell_I   = Loader->load( "res://scenes/Square.tscn" );
     SafeCell = Loader->load( "res://assets/PlayerIcons/safecell.png" );
-    for ( auto l = 0; l < G2::LudoBoard.size(); l++ ) {
-        int k = G2::LudoBoard[l];
+    for ( auto i = 0; i < G2::LudoBoard.size(); i++ ) {
+        int k = G2::LudoBoard[i];
 
-        Cell[l] = (Sprite *)Cell_I->instance();
+        Cell[i] = (Sprite *)Cell_I->instance();
 
-        add_child( (const Node *)Cell[l] );
-        Cell[l]->set_position( Posi[k] );
-        Cell[l]->set_scale( Scale_L );
-        Cell[l]->call( "SetId", l );
+        add_child( (const Node *)Cell[i] );
+        Cell[i]->set_position( Posi[k] );
+        Cell[i]->set_scale( Scale_L );
+        Cell[i]->call( "SetId", i );
     }
 
     for ( int i : G2::SafeSq ) { Cell[i]->set_texture( SafeCell ); }
@@ -139,7 +148,15 @@ void BoardDisplay::DrawBaseBoard()
     //  for ( int i : G2::SafeSq ) { Cell[i]->set_texture( SafeCell ); }
 }
 Vector2 BoardDisplay::GetPosi( int square ) { return Posi[square]; }
-void    BoardDisplay::_register_methods()
+
+void BoardDisplay::MovePP_TO( int player, int piece, int square )
+{
+    assert( square <
+            G2::LudoBoard.size() );  // cuz c++ cant check array out of bound
+
+    Player[player]->call( "Dw_MovePiece", piece, Posi[G2::LudoBoard[square]] );
+}
+void BoardDisplay::_register_methods()
 {
     register_method( "_ready", &BoardDisplay::_ready );
 
@@ -151,6 +168,10 @@ void    BoardDisplay::_register_methods()
     register_signal<BoardDisplay>( (char *)"Up_PieceClicked", "PlID",
                                    GODOT_VARIANT_TYPE_INT, "PiID",
                                    GODOT_VARIANT_TYPE_INT );
+
+    register_signal<BoardDisplay>(
+        (char *)"Down_PieceClicked", "Player", GODOT_VARIANT_TYPE_INT, "Piece",
+        GODOT_VARIANT_TYPE_INT, "to", GODOT_VARIANT_TYPE_INT );
 }
 
 void BoardDisplay::_on_PPclicked( int player, int piece )
