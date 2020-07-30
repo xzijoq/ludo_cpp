@@ -1,12 +1,10 @@
 #include <GData.h>
+#include <bits/stdint-intn.h>
 
 #include <Godot.hpp>
 #include <Node2D.hpp>
-
-#include "Area2D.hpp"
-#include "InputEvent.hpp"
-#include "Node.hpp"
-#include "Sprite.hpp"
+#include "CoreE.h"
+using u64 =unsigned long long int;
 namespace godot
 {
 class GameEngine : public godot::Node2D
@@ -22,6 +20,9 @@ class GameEngine : public godot::Node2D
     void        _ready();
     void        _process();
     void        InputClicked( int player, int piece );
+    void        ApplyMove(MoveE PackedMove);
+
+
 
    public:
 };

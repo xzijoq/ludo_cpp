@@ -23,10 +23,30 @@ void BoardDisplay::_ready()
 
     DrawBoard();
     InitPlayers();
-    MovePP_TO( 1, 2, 52 );
+
+
+
+    // MovePP_TO( 1, 2, 52 );
 
     // Godot::print(48+l.size());
     //  DrawBaseBoard();
+}
+
+void BoardDisplay::MakeMove( std::array<int, 10> movD )
+{
+    // int From=movD[0];
+    int To        = movD[1];
+    int Player    = movD[2];
+    int Piece     = movD[3];
+    int IsCapture = movD[4];
+    int PlCap     = movD[5];
+
+    MovePP_TO( Player, Piece, To );
+    if ( IsCapture != 0 ) {
+        for ( int i = 6; i < 10; i++ ) {
+            if ( movD[i] != 0 ) { MovePP_TO( PlCap, i - 6, G2::START_POSI ); }
+        }
+    }
 }
 
 void BoardDisplay::InitPlayers()
@@ -164,22 +184,24 @@ void BoardDisplay::_register_methods()
     register_method( "DrawBoard", &BoardDisplay::DrawBoard );
     register_method( "GetPosi", &BoardDisplay::GetPosi );
     register_method( "_on_PPclicked", &BoardDisplay::_on_PPclicked );
+    register_method("MovePP_TO",&BoardDisplay::MovePP_TO);
 
     register_signal<BoardDisplay>( (char *)"Up_PieceClicked", "PlID",
                                    GODOT_VARIANT_TYPE_INT, "PiID",
                                    GODOT_VARIANT_TYPE_INT );
-
-    register_signal<BoardDisplay>(
-        (char *)"Down_PieceClicked", "Player", GODOT_VARIANT_TYPE_INT, "Piece",
-        GODOT_VARIANT_TYPE_INT, "to", GODOT_VARIANT_TYPE_INT );
 }
 
 void BoardDisplay::_on_PPclicked( int player, int piece )
 {
     std::string s1 = "Player: " + std::to_string( player ) +
                      " Piece: " + std::to_string( piece );
+    
+
 
     const char *wow = s1.c_str();
     Godot::print( wow );
+
+    emit_signal( "Up_PieceClicked", player, piece );
 }
+
 void BoardDisplay::_init() {}

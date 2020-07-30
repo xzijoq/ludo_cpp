@@ -21,12 +21,14 @@ class BoardDisplay : public Node2D
     void DrawDebugBoard();
     void InitPlayers();
     void DrawBaseBoard();
+    void MakeMove(std::array<int, 10> moveD  );
 
    private:
-    Vector2       SC_SZ   = Vector2( 0, 0 );
-    Vector2       Scale64 = Vector2( 0, 0 );
-    Vector2       Scale_L = Vector2( 0, 0 );
-    const Vector2 HOME_SQ = Vector2( 72, 72 );
+    Vector2            SC_SZ   = Vector2( 0, 0 );
+    Vector2            Scale64 = Vector2( 0, 0 );
+    Vector2            Scale_L = Vector2( 0, 0 );
+    const Vector2      HOME_SQ = Vector2( 72, 72 );
+    std::array<int, 10> MoveD;
 
     std::array<Sprite *, G2::LudoBoard.size()>      Cell;
     std::array<Sprite *, G2::MAX_ROW * G2::MAX_COL> BCell;

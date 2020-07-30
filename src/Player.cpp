@@ -12,13 +12,16 @@
 #include "ResourceLoader.hpp"
 #include "String.hpp"
 #include "Vector2.hpp"
+#include "engine/includes/CoreE.h"
 #include "gdnative/variant.h"
+#include "CoreE.h"
 
 using namespace godot;
 
 void Player::_ready()
 {
     InitPieces();
+
     // SetPlID(3);
 }
 
