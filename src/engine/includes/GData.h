@@ -7,7 +7,8 @@
 using u32 = std::uint_fast32_t;
 namespace G2
 {
-struct IntV2 {
+struct IntV2
+{
     int x;
     int y;
 };
@@ -18,10 +19,11 @@ int constexpr MAX_PLAYERS = 4;
 int constexpr MAX_PIECES  = 4;
 int constexpr START_POSI  = 72;
 int constexpr END_POSI    = 73;
+int constexpr OUTER_SZ    = 52;
 
 u32 constexpr MAX_PP = G2::MAX_PIECES * G2::MAX_PLAYERS;
 
-constexpr std::array SpawnPoint{ 0, 12, 192, 180 };
+constexpr std::array SpawnPoint{ 12, 192, 180, 0 };
 
 constexpr std::array LudoBoard{
     6, 7, 8, 23, 38, 53, 68, 83,                                     // 0-7
@@ -39,7 +41,7 @@ constexpr std::array LudoBoard{
 
 constexpr std::array SafeSq       = { 3,  11, 16, 24,         29,
                                 37, 42, 50, START_POSI, END_POSI };
-constexpr std::array StartSq      = { 3, 6, 29, 42 };
+constexpr std::array StartSq      = { 3, 16, 29, 42 };
 constexpr std::array SwitchSq     = { 1, 14, 27, 40 };
 constexpr std::array SwitchIntoSq = { 52, 57, 62, 67 };
 constexpr std::array EndSq        = { 56, 61, 66, 71 };

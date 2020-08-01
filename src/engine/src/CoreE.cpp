@@ -1,30 +1,73 @@
-#include "DeclarationsE.h"
+#include "CoreE.h"
+
+#include <cassert>
 #include <iostream>
 
+#include "DeclarationsE.h"
+#include "GData.h"
+
 using std::cout;
+static constexpr int Mpl = G2::MAX_PLAYERS;
+static constexpr int Mpi = G2::MAX_PIECES;
+static constexpr int Mpp = Mpl * Mpi;
+static const int     Bsz = G2::LudoBoard.size();
 
-
-void PieceE::InitPieceE( u32 sq, u32 inSq, u32 endSq, u32 swiSq,
-                            u32 plNum, u32 pieNum
-                        )
+void PieceE::InitPieceE( u32 sq, u32 inSq, u32 endSq, u32 swiSq, u32 plNum,
+                         u32 pieNum )
 {
-    Sq(sq);
-    InSq(inSq);
-    EndSq(endSq);
-    SwiSq(swiSq);
-    Pnum(plNum);
-    PieNum(pieNum);
-    
+    Sq( sq );
+    InSq( inSq );
+    EndSq( endSq );
+    SwiSq( swiSq );
+    Pnum( plNum );
+    PieNum( pieNum );
+}
+void PieceE::CheckPiece()
+{
+    assert( Sq() < Bsz );
 
+    /*only required afer init
+    assert( InSq() < Bsz );
+    assert( EndSq() < Bsz );
+    assert( SwiSq() < Bsz );
+    assert( PieNum() < Bsz );
 
+    //kindka useless
+    assert( PieNum() < Mpi );
+    assert(Pnum()<Mpl);
+    assert( PPnum() <Mpp );
+*/
 }
 
+void SquareE::CheckSquare()
+{
+    for ( int i = 0; i < Mpl; i++ )  // will be kinda trivially true
+    {
+        assert( Pl( i ) < Mpp );
+    }
+}
 
-void BitsE::DisplayBits(int sp)
+void MoveE::CheckMove()
+{
+    assert( From() < Bsz );
+    assert( To() < Bsz );
+
+    if ( From() == To() ) {
+        std::cout << "\nFrom And To are same in this Move\n";
+    }
+
+    /* kinda useless
+    assert(PP()<Mpp);
+    assert(Pl()<Mpl);
+    assert(Pi()<Mpi);
+    */
+}
+
+void BitsE::DisplayBits( int sp )
 {
     for ( auto i = 31; i >= 0; i-- ) {
         ( PInt & 1ULL << i ) ? cout << 1 : cout << 0;
         if ( ( i ) % sp == 0 ) { cout << " "; }
-        if ( ( i ) % 4 == 0 && sp==8 ) { cout << " "; }
+        if ( ( i ) % 4 == 0 && sp == 8 ) { cout << " "; }
     }
 }

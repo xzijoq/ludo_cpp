@@ -13,10 +13,13 @@ void InitBoardE()
     for ( int i = 0; i < G2::MAX_PLAYERS; i++ ) {
         for ( int j = 0; j < G2::MAX_PIECES; j++ ) {
             Pp[i * G2::MAX_PIECES + j].InitPieceE(
-                G2::START_POSI, G2::SwitchSq[i], G2::EndSq[i],
-                G2::SwitchIntoSq[i], i, j );
+                G2::START_POSI, G2::SwitchIntoSq[i], G2::EndSq[i],
+                G2::SwitchSq[i], i, j );
             Sq[G2::START_POSI].PushPP(i,j);    
         }
+    }
+    for(auto i : G2::SafeSq){
+        Sq[i].SetSafe();
     }
 }
 

@@ -50,6 +50,13 @@ void GameEngine::_register_methods()
 void GameEngine::InputClicked( int player, int piece )
 {
   //  Godot::print("fff");
+
+      std::string s1 = "Player: " + std::to_string( player ) +
+                     " Piece: " + std::to_string( piece );
+
+    //  const char *wow = s1.c_str();
+     //Godot::print( wow );
+
     MoveE tt;
     tt=OnPieceClicked(player, piece);
 

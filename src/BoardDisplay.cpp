@@ -13,6 +13,7 @@
 #include "Vector2.hpp"
 #include "array"
 #include "gdnative/variant.h"
+
 using namespace godot;
 
 Area2D *PPtest;
@@ -28,6 +29,10 @@ void BoardDisplay::_ready()
 
     // Godot::print(48+l.size());
     //  DrawBaseBoard();
+    InputDelay = Timer::_new();
+    InputDelay->set_one_shot( true );
+    InputDelay->set_wait_time( .1);
+    add_child(InputDelay);
 }
 
 void BoardDisplay::MakeMove( std::array<int, 10> movD )
@@ -196,13 +201,16 @@ void BoardDisplay::_register_methods()
 
 void BoardDisplay::_on_PPclicked( int player, int piece )
 {
-    std::string s1 = "Player: " + std::to_string( player ) +
-                     " Piece: " + std::to_string( piece );
+    if ( InputDelay->is_stopped() ) {
+        std::string s1 = "Player: " + std::to_string( player ) +
+                         " Piece: " + std::to_string( piece );
 
-    //  const char *wow = s1.c_str();
-    // Godot::print( wow );
+        // const char *wow = s1.c_str();
+        // Godot::print( wow );
 
-    emit_signal( "Up_PieceClicked", player, piece );
+        emit_signal( "Up_PieceClicked", player, piece );
+        InputDelay->start();
+    }
 }
 
 void BoardDisplay::_init() {}

@@ -8,7 +8,7 @@
 #include "String.hpp"
 #include "Vector2.hpp"
 #include "gdnative/variant.h"
-#include <Timer.hpp>
+
 namespace godot
 {
 class PPiece : public godot::Area2D
@@ -34,7 +34,7 @@ class PPiece : public godot::Area2D
    void Initialize();
    private:
    Vector2 SC_SZ;
-  Timer* ClickCD;
+
 
 
 

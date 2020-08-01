@@ -2,6 +2,8 @@
 
 #include <bitset>
 #include <iostream>
+
+#include "CoreE.h"
 #include "GData.h"
 using std::cout;
 
@@ -14,7 +16,8 @@ void DebugE::PrintPieceArray()
     }
 
     for ( int i = 0; i < G2::MAX_PP; i++ ) {
-        cout << "\nPlN: " << Pp[i].Pnum() << " PieN: " << Pp[i].PieNum()
+        cout<<"\n"<<"PP: "<<PieceE::GetPPnum(Pp[i].Pnum(),  Pp[i].PieNum());
+        cout << " PlN: " << Pp[i].Pnum() << " PieN: " << Pp[i].PieNum()
              << " SwiSq: " << Pp[i].SwiSq() << " EndSq: " << Pp[i].EndSq()
              << " InSq: " << Pp[i].InSq() << " Sq: " << Pp[i].Sq();
     }
@@ -177,18 +180,17 @@ void DebugE::DisplayPMove( MoveE mv )
     cout << "\n";
 }
 
-void DebugE::DisplaySquares(  )
+void DebugE::DisplaySquares()
 {
-for(int i=0;i<Sq.size();i++){
-    for(int j=0;j<G2::MAX_PIECES;j++){
-        if(Sq[i].Pl(j)!=0){
-            cout<<"\nSquare "<<i<<" is: ";
-            Sq[i].DisplayBits();
-            break;
-
+    for ( int i = 0; i < Sq.size(); i++ ) {
+        for ( int j = 0; j < G2::MAX_PIECES; j++ ) {
+            if ( Sq[i].Pl( j ) != 0 ) {
+                cout << "\nSquare " << i << " is: ";
+                Sq[i].DisplayBits();
+                break;
+            }
         }
     }
-}
 }
 
 void DebugE::DisBits( u32 count, u32 num )

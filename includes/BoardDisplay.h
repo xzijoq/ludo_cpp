@@ -9,6 +9,7 @@
 #include "Ref.hpp"
 #include "Sprite.hpp"
 #include "Vector2.hpp"
+#include"Timer.hpp"
 namespace godot
 {
 class BoardDisplay : public Node2D
@@ -29,6 +30,7 @@ class BoardDisplay : public Node2D
     Vector2            Scale_L = Vector2( 0, 0 );
     const Vector2      HOME_SQ = Vector2( 72, 72 );
     std::array<int, 10> MoveD;
+    Timer* InputDelay;
 
     std::array<Sprite *, G2::LudoBoard.size()>      Cell;
     std::array<Sprite *, G2::MAX_ROW * G2::MAX_COL> BCell;

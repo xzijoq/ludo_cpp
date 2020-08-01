@@ -2,13 +2,15 @@ cmake_minimum_required(VERSION 3.12)
 
 project(ludo_cpp)
 cmake_policy(SET CMP0076 NEW)
-set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -g -O0")
+
 
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(GodotCpp ../../godot-cpp)
 
 add_library(ludo_engine SHARED)
+
+target_compile_features(ludo_engine PRIVATE cxx_std_20)
 
 add_subdirectory(src/engine)
 

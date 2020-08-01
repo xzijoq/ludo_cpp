@@ -40,7 +40,7 @@ class PieceE : public BitsE
    public:
     static inline u32 GetPPnum( u32 pl, u32 pi )
     {
-        return (pl * G2::MAX_PIECES + pi);
+        return ( pl * G2::MAX_PIECES + pi );
     }
     inline u32 Sq() { return GetBits( 7, 0 ); }
     inline u32 InSq() { return GetBits( 7, 7 ); }
@@ -53,7 +53,8 @@ class PieceE : public BitsE
                            u32 PieNum );
 
     inline void Sq( u32 sq ) { SetBits( 7, sq, 0 ); }
-    
+
+    void CheckPiece();
 
    private:
     inline void InSq( u32 sq ) { SetBits( 7, sq, 7 ); }
@@ -77,11 +78,16 @@ class SquareE : public BitsE
     inline u32 Pl( u32 pl ) { return ( GetBits( M_Pi, pl * M_Pi ) ); }
     inline u32 PP( u32 pl, u32 pi ) { return GetBit( ( pl * M_Pi + pi ) ); }
     inline u32 PP( u32 PPnum ) { return GetBit( PPnum ); }
+    inline u32 IsSafe(){return GetBit(26);}
 
     inline void PushPP( u32 pl, u32 pi ) { SetBit( pl * M_Pi + pi ); }
     inline void PushPP( u32 PPnum ) { SetBit( PPnum ); }
     inline void PopPP( u32 pl, u32 pi ) { UnSetBit( pl * M_Pi + pi ); }
     inline void PopPP( u32 PPnum ) { UnSetBit( PPnum ); }
+
+    void CheckSquare();  // useless currently
+
+    inline void SetSafe(){SetBit(26);}
 };
 
 // from7  to7  PP4 isCap1  Cpl2 pieBits4  lsb->msb
@@ -107,5 +113,7 @@ class MoveE : public BitsE
     inline u32 IsCap() { return GetBits( 1, 18 ); }
     inline u32 CPl() { return GetBits( 2, 19 ); }
     inline u32 PBits() { return GetBits( 4, 21 ); }
+
+    void CheckMove();
     friend class DebugE;
 };

@@ -15,11 +15,11 @@
 #include "Object.hpp"
 #include "PoolArrays.hpp"
 #include "ResourceLoader.hpp"
+#include "SceneTree.hpp"
 #include "Texture.hpp"
 #include "Timer.hpp"
 #include "Vector2.hpp"
 #include "gdnative/variant.h"
-#include "SceneTree.hpp"
 using namespace godot;
 
 void PPiece::_ready()
@@ -30,12 +30,6 @@ void PPiece::_ready()
 
 void PPiece::Initialize()
 {
-    ClickCD = Timer::_new();
-    ClickCD->set_wait_time( .2 );
-    ClickCD->set_one_shot( true );
-
-    add_child( ClickCD );
-
     Vector2 Scale_L;
     float   CellSize = 0.0f;
     int     SPixel   = 64;
@@ -99,24 +93,15 @@ void PPiece::_on_PPiece_Input_event( const Object* vp, Ref<InputEvent> event,
                                      int64_t idx )
 {
     //  Godot::print( "HAmn abbhi zinda hain nigger" );
-    if ( event->get_class() == "InputEventMouseButton" ) //d
+    if ( event->get_class() == "InputEventMouseButton" )  // d
     {
-
-        if ( ( (Ref<InputEventMouseButton>)event )->get_button_index() == 1 ) //d
-        {
-            if ( event->is_pressed() ) //d
+        if ( ( (Ref<InputEventMouseButton>)event )->get_button_index() == 1 ) {
+            if ( event->is_pressed() )  // d
             {
-                if (  ClickCD->is_stopped() ) //crazy
-
-                {
-                    get_tree()->set_input_as_handled();
-                   // Godot::print("PieceCLicked");
-                   // Godot::print(PieceID+48);
-                    emit_signal( "Up_PPclicked_s", PieceID );
-                    
-                    // Godot::print("omg");}
-                    ClickCD->start();
-                }
+                get_tree()->set_input_as_handled();
+                // Godot::print("PieceCLicked");
+                // Godot::print(PieceID+48);
+                emit_signal( "Up_PPclicked_s", PieceID );
             }
         }
     }
