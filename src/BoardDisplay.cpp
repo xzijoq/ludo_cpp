@@ -24,8 +24,6 @@ void BoardDisplay::_ready()
     DrawBoard();
     InitPlayers();
 
-
-
     // MovePP_TO( 1, 2, 52 );
 
     // Godot::print(48+l.size());
@@ -171,10 +169,15 @@ Vector2 BoardDisplay::GetPosi( int square ) { return Posi[square]; }
 
 void BoardDisplay::MovePP_TO( int player, int piece, int square )
 {
-    assert( square <
-            G2::LudoBoard.size() );  // cuz c++ cant check array out of bound
+    assert( square < G2::LudoBoard.size() );
+    // cuz c++ cant check array out of bound
 
-    Player[player]->call( "Dw_MovePiece", piece, Posi[G2::LudoBoard[square]] );
+    if ( square == 72 ) {
+        Player[player]->call( "Dw_MovePiece", piece, Vector2( 72, 72 ) );
+    } else {
+        Player[player]->call( "Dw_MovePiece", piece,
+                              Posi[G2::LudoBoard[square]] );
+    }
 }
 void BoardDisplay::_register_methods()
 {
@@ -184,7 +187,7 @@ void BoardDisplay::_register_methods()
     register_method( "DrawBoard", &BoardDisplay::DrawBoard );
     register_method( "GetPosi", &BoardDisplay::GetPosi );
     register_method( "_on_PPclicked", &BoardDisplay::_on_PPclicked );
-    register_method("MovePP_TO",&BoardDisplay::MovePP_TO);
+    register_method( "MovePP_TO", &BoardDisplay::MovePP_TO );
 
     register_signal<BoardDisplay>( (char *)"Up_PieceClicked", "PlID",
                                    GODOT_VARIANT_TYPE_INT, "PiID",
@@ -195,11 +198,9 @@ void BoardDisplay::_on_PPclicked( int player, int piece )
 {
     std::string s1 = "Player: " + std::to_string( player ) +
                      " Piece: " + std::to_string( piece );
-    
 
-
-    const char *wow = s1.c_str();
-    Godot::print( wow );
+    //  const char *wow = s1.c_str();
+    // Godot::print( wow );
 
     emit_signal( "Up_PieceClicked", player, piece );
 }

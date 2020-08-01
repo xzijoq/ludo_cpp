@@ -12,5 +12,5 @@ extern array<PieceE, G2::MAX_PLAYERS * G2::MAX_PIECES> Pp;
 extern vector<MoveE> MoveStack;
 extern void          PushMove( MoveE mv );
 extern MoveE         PopMove();
-extern void          InitAllPlayers();
+extern void          InitBoardE();
 

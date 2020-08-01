@@ -6,17 +6,17 @@ echo $1
 #bear for other compile jason
 
 cmake_b(){
-    rm -r ./build/bin/main
+    rm -r ./build/bin/EngineE
     cmake --build build -j8 #-v 
     cp ./build/compile_commands.json ./compile_commands.json 
 
-    ./build/main
+    ./build/EngineE
     echo ""
  
 }
 if [[ $1 = scan ]]
 then
-    rm -r ./build/bin/main
+    rm -r ./build/bin/EngineE
     echo ""
     echo "--------------building with scan-build-----------"
     scan-build cmake --build build -j8 #-v 
@@ -27,7 +27,7 @@ then
     clang-tidy includes/*.h
     echo ""
     echo "--------------ruuning executable----------------"
-    ./build/bin/main
+    ./build/bin/EngineE
     echo ""
 
 fi

@@ -40,7 +40,8 @@ void Player::InitPieces()
         Dw_MovePiece( i, Vector2( 72, 72 ) );
     }
 
-    // Dw_MovePiece( 3, Vector2( 0, 0 ) );
+
+    // Dw_MovePiece( 1, Vector2( 45, 222 ) );
     // Dw_MovePiece( 2, Vector2( 56, 256 ) );
 }
 

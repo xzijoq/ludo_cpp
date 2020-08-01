@@ -8,35 +8,33 @@
 #include "DebugE.h"
 #include "EngineE.h"
 #include "GData.h"
-
+#include "OS.hpp"
 using namespace godot;
 
 #define Mpp( pl, pi, sq ) DBoard->call( "MovePP_TO", pl, pi, sq )
-MoveE test;
+
 
 void GameEngine::_ready()
 {
     DBoard = (Node2D*)get_node( "../BoardDisplay" );
     DBoard->connect( "Up_PieceClicked", this, "InputClicked" );
+    man();
+    auto os=OS::get_singleton();
+    os->set_window_position(Vector2(1250,0));
 
-    test.SetmTo( 12 );
-    test.SetmPl( 0 );
-    test.SetmPi( 0 );
-    test.SetmIsCap( 1 );
-    test.SetmCPl( 1 );
-    test.SetmPBits( 0b1101 );
+
 }
 
 void GameEngine::ApplyMove( MoveE mv )
-{
-    Mpp( mv.GetmPl(), mv.GetmPi(), mv.GetmTo() );
+{   // DebugE::DisplaySquares();
+    Mpp( mv.Pl(), mv.Pi(), mv.To() );
 
-    if ( mv.GetmIsCap() == 1 ) {
-        int player = mv.GetmCPl();
+    if ( mv.IsCap() == 1 ) {
+        int player = mv.CPl();
 
         for ( int i = 0; i < 4; i++ ) {
-            if ( ( ( mv.GetmPBits() >> i ) & (u32)1 ) != 0 ) {
-                Mpp( player, i, 43 );
+            if ( ( ( mv.PBits() >> i ) & (u32)1 ) != 0 ) {
+                Mpp( player, i, 72 );
             }
         }
     }
@@ -51,9 +49,12 @@ void GameEngine::_register_methods()
 
 void GameEngine::InputClicked( int player, int piece )
 {
+  //  Godot::print("fff");
+    MoveE tt;
+    tt=OnPieceClicked(player, piece);
 
-    ApplyMove( test );
-    DebugE::DisplayPMove(test);
+    ApplyMove( tt );
+   // DebugE::DisplayPMove(test);
 }
 
 void GameEngine::_init()

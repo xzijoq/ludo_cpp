@@ -9,7 +9,7 @@ echo $1
 cmake_b(){
 
     cmake --build build -j8 #-v 
-    cp ./build/compile_commands.json ./compile_commands.json 
+  #  cp ./build/compile_commands.json ./compile_commands.json 
     cp ./build/libludo_engine.so ./ludo_cpp/bin/libludo_engine.so
     echo ""
 }
