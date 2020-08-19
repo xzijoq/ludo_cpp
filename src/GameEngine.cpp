@@ -21,6 +21,7 @@ void GameEngine::_ready()
     man();
     auto os=OS::get_singleton();
     os->set_window_position(Vector2(1250,0));
+    
 
 
 }
@@ -70,3 +71,8 @@ void GameEngine::_init()
 }
 
 void GameEngine::_process() {}
+
+
+
+
+

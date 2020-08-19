@@ -35,22 +35,6 @@ void BoardDisplay::_ready()
     add_child(InputDelay);
 }
 
-void BoardDisplay::MakeMove( std::array<int, 10> movD )
-{
-    // int From=movD[0];
-    int To        = movD[1];
-    int Player    = movD[2];
-    int Piece     = movD[3];
-    int IsCapture = movD[4];
-    int PlCap     = movD[5];
-
-    MovePP_TO( Player, Piece, To );
-    if ( IsCapture != 0 ) {
-        for ( int i = 6; i < 10; i++ ) {
-            if ( movD[i] != 0 ) { MovePP_TO( PlCap, i - 6, G2::START_POSI ); }
-        }
-    }
-}
 
 void BoardDisplay::InitPlayers()
 {
@@ -176,6 +160,7 @@ void BoardDisplay::MovePP_TO( int player, int piece, int square )
 {
     assert( square < G2::LudoBoard.size() );
     // cuz c++ cant check array out of bound
+    // it can if we use the .at() operator rather tahn the []
 
     if ( square == 72 ) {
         Player[player]->call( "Dw_MovePiece", piece, Vector2( 72, 72 ) );
@@ -214,3 +199,6 @@ void BoardDisplay::_on_PPclicked( int player, int piece )
 }
 
 void BoardDisplay::_init() {}
+
+
+

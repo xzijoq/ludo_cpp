@@ -22,7 +22,7 @@ class BoardDisplay : public Node2D
     void DrawDebugBoard();
     void InitPlayers();
     void DrawBaseBoard();
-    void MakeMove(std::array<int, 10> moveD  );
+
 
    private:
     Vector2            SC_SZ   = Vector2( 0, 0 );

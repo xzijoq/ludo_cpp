@@ -6,11 +6,14 @@ cmake_policy(SET CMP0076 NEW)
 
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
+
 set(GodotCpp ../../godot-cpp)
 
 add_library(ludo_engine SHARED)
 
-target_compile_features(ludo_engine PRIVATE cxx_std_20)
+target_compile_features(ludo_engine PRIVATE cxx_std_20 )
+target_compile_options(ludo_engine PRIVATE -Wall )  
 
 add_subdirectory(src/engine)
 

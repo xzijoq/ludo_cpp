@@ -93,3 +93,5 @@ void Player::_on_Piece_Clicked( int pieceID )
     emit_signal( "Up_PlClicked_s", PlayerID, pieceID );
 }
 void Player::_init() {}
+
+

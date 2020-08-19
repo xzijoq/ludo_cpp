@@ -6,7 +6,7 @@
 class BitsE
 {
    public:
-    u32                  PInt;
+    u32                  PInt{0};
     static constexpr u32 pow[]{
         0b0,     0b1,      0b11,      0b111,     0b1111,  // wow
         0b11111, 0b111111, 0b1111111, 0b11111111
