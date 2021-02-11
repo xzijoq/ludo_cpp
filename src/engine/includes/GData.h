@@ -1,7 +1,7 @@
 #pragma once
 
 #include <array>
-
+#include <cstdint>
 #define ARRAY_SIZE( a ) ( sizeof( a ) / sizeof( a[0] ) )
 
 using u32 = std::uint_fast32_t;

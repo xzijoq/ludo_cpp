@@ -29,12 +29,12 @@ then
     echo "running: camke --build build and runnning Scene: $2"
     cmake_b
 
-    cd /home/babayaga/Godot/Projects/ludo_cpp/ludo_cpp/
+    cd ./ludo_cpp/
     if [[ $2 = "" ]]
     then
-    	/home/babayaga/Godot/Godot -d scenes/BoardDisplay.tscn 	
+    	/home/babayaga/godot/godot -d scenes/BoardDisplay.tscn 	
     else       
-	    /home/babayaga/Godot/Godot -d scenes/$2.tscn
+	    /home/babayaga/godot/godot -d scenes/$2.tscn
     fi
     
 fi
